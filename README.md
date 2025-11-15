@@ -1,7 +1,7 @@
-<H3>ENTER YOUR NAME</H3>
-<H3>ENTER YOUR REGISTER NO.</H3>
+<H3>ENTER THE NAME:Payyavula Jeshwanth Kumar </H3>
+<H3>ENTER YOUR REGISTER.NO:212223240114</H3>
 <H3>EX. NO.1</H3>
-<H3>DATE</H3>
+<H3>14-09-2025</H3>
 <H1 ALIGN =CENTER> Introduction to Kaggle and Data preprocessing</H1>
 
 ## AIM:
@@ -37,12 +37,59 @@ STEP 5:Normalizing the data<BR>
 STEP 6:Splitting the data into test and train<BR>
 
 ##  PROGRAM:
-TYPE YOUR CODE HERE
+
+```
+#import libraries
+from google.colab import files
+import pandas as pd
+import io
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.model_selection import train_test_split
+
+uploaded = files.upload()
+df = pd.read_csv(io.BytesIO(uploaded['Churn_Modelling.csv']))
+
+print(df.describe())
+print(df.head())
+
+print("\nMissing values in dataset:")
+print(df.isnull().sum())
+
+df.isna().sum()
+df = df.dropna()
+duplicates = df.duplicated().sum()
+df = df.drop_duplicates()
+
+
+df = df.drop(["RowNumber","CustomerId","Surname"], axis=1)
+
+
+X = df.drop(["Exited","Geography","Gender"], axis=1)
+y = df["Exited"]
+
+scaler = MinMaxScaler()
+X_scaled = scaler.fit_transform(X)
+
+X_train,X_test,y_train,y_test = train_test_split(X_scaled,y,test_size=0.2,random_state=42)
+
+print("Length of X_test ",len(X_test))
+print("Length of X_train",len(X_train))
+
+```
 
 
 ## OUTPUT:
-SHOW YOUR OUTPUT HERE
+### Describe:
+<img width="1174" height="712" alt="image" src="https://github.com/user-attachments/assets/7d2f9ad7-5ee4-4a86-a4b2-4a921a87fd04" />
 
+### Missing values:
+<img width="469" height="385" alt="image" src="https://github.com/user-attachments/assets/7686e13d-2e57-41ed-a68f-9cbd11385921" />
+
+### Normalised dataset:
+<img width="873" height="460" alt="image" src="https://github.com/user-attachments/assets/adc90a3f-1de6-4813-9f9e-08a6a8b04f58" />
+
+### Train test split:
+<img width="1508" height="222" alt="image" src="https://github.com/user-attachments/assets/da9bd8aa-b7f1-4735-b267-f09a23246c51" />
 
 ## RESULT:
 Thus, Implementation of Data Preprocessing is done in python  using a data set downloaded from Kaggle.
